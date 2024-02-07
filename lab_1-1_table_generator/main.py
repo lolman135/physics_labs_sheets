@@ -1,6 +1,5 @@
 from functional import *
 from alphabet import letters
-from tkinter import messagebox
 
 amount_of_cells = int(input("Введіть кількість комірок: "))
 period = float(input("Введіть період пʼяти коливань: "))
@@ -25,9 +24,7 @@ try:
     workbook.save(file)
     workbook.close()
 
-    messagebox.showinfo("sucsess", "Таблицю успішно створено")
     print("Таблицю успішно створено")
     
 except FileNotFoundError:
-    messagebox.showerror("fail", "Заданий файл excel не знайдено")
     print("Файл не знайдено")   
