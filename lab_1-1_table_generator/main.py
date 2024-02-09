@@ -1,23 +1,5 @@
-from functional import *
-from alphabet import letters, letter_index, amount_of_cells, range_table
-
-period = float(input("Введіть період пʼяти коливань: "))
-deflection = period * uniform(0.02, 0.08)
-
-array_of_five_oscillation_periods = [element_generating(period, deflection) for i in range(amount_of_cells)]
-array_of_one_oscillation_periods = list(map(lambda x: x / 5, array_of_five_oscillation_periods))
-sliced_one_oc_array = array_of_one_oscillation_periods[:50]
-
-average_period = sum(array_of_one_oscillation_periods)/amount_of_cells
-sliced_average_period = sum(sliced_one_oc_array)/(amount_of_cells/2)
-
-delta_array =list(map(lambda x: x - average_period, array_of_one_oscillation_periods))
-square_delta = list(map(lambda x: x ** 2, delta_array))
-
-delta_sliced_array = list(map(lambda x: x - sliced_average_period, sliced_one_oc_array))
-square_delta_sliced = list(map(lambda x: x ** 2, delta_sliced_array))
-
-amount_of_cells = int(amount_of_cells/2)
+from variables import *
+import os
 
 try:
     file = "test.xlsx"
@@ -51,12 +33,27 @@ try:
                 sheet[cell_name_forming(letters[letter_index+j], choice(amount_of_cells, (amount_of_cells*2), loop)+7+i)] = len(range_table[counter+1])
                 x+=0.01; counter+=1
 
-        letter_index += 10
+        
+        sheet[cell_name_forming(letters[13], 2+loop)] = n_equals_inscription(itera_cells_amount)
+        for i in range(20):
+            sheet[cell_name_forming(letters[14+i], 2+loop)] = round(len(range_table[i+1])/itera_cells_amount,4)
+
+        letter_index += 7
+
+    sheet[cell_name_forming(letters[13], 2)] = "Інтервали відхилень\n за номерами No"
+    for i in range(20):
+        sheet[cell_name_forming(letters[14+i], 2)] = i
 
     workbook.save(file)
     workbook.close()
 
     print("Таблицю успішно створено")
     
+    if os.name == "posix":
+        os.system(f'open -a "Microsoft Excel" "{file}"')
+    else:
+        os.system(f'start excel "{file}"')
+    
+
 except FileNotFoundError:
     print("Файл не знайдено")   
