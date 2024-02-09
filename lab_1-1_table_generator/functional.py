@@ -28,3 +28,6 @@ def distribution(a, some):
 
 def inscription(x):
     return str(round(x, 2)) + " <= ∆Ti < " + str(round(x+0.01, 2))
+
+def n_equals_inscription(x):
+    return "∆ni/n, для n="+str(x)
